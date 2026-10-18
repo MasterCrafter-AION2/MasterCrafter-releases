@@ -1,0 +1,43 @@
+name: Reportar un error / Report a bug
+description: Algo no funciona como debería / Something is not working
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        MasterCrafter es una **prealfa**: tu reporte nos ayuda mucho. / MasterCrafter is a **pre-alpha**: your report helps a lot.
+        No incluyas datos personales. / Do not include personal data.
+  - type: input
+    id: version
+    attributes:
+      label: Versión de la app / App version
+      description: Ajustes › Actualizaciones / Settings › Updates
+      placeholder: "0.1.4"
+    validations:
+      required: true
+  - type: textarea
+    id: que-paso
+    attributes:
+      label: ¿Qué pasó? / What happened?
+    validations:
+      required: true
+  - type: textarea
+    id: pasos
+    attributes:
+      label: Pasos para reproducirlo / Steps to reproduce
+  - type: textarea
+    id: esperado
+    attributes:
+      label: ¿Qué esperabas que pasara? / What did you expect?
+  - type: dropdown
+    id: modulo
+    attributes:
+      label: Módulo / Module
+      options:
+        - Medidor de DPS / DPS meter
+        - Avisos de eventos / Event alerts
+        - Calculadora de crafteo / Crafting calculator
+        - Base de datos / Database
+        - Perfiles de personaje / Character profiles
+        - Actualizaciones / Updates
+        - Otro / Other

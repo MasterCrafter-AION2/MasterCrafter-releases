@@ -3,89 +3,238 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>MasterCrafter — Herramientas para AION 2</title>
-<meta name="description" content="MasterCrafter: medidor de DPS, avisos de eventos, calculadora de crafteo y explorador de base de datos para AION 2.">
+<title>MasterCrafter — AION 2</title>
+<meta name="description" content="MasterCrafter (prealfa): DPS meter, event alerts, crafting calculator and database explorer for AION 2.">
+<link rel="icon" type="image/png" href="logo-64.png">
 <style>
-:root{--bg:#0b1020;--card:#121a30;--line:#22304d;--txt:#e6ecff;--mut:#93a1c4;--acc:#22d3ee;--acc2:#34d399}
+:root{--bg:#0b0f19;--card:rgba(15,23,42,.7);--line:#1e293b;--txt:#e2e8f0;--mut:#94a3b8;--acc:#22d3ee;--acc2:#06b6d4}
 *{box-sizing:border-box}
-body{margin:0;background:radial-gradient(1200px 600px at 50% -10%,#16315a 0,var(--bg) 60%);color:var(--txt);font:16px/1.6 system-ui,Segoe UI,Roboto,sans-serif}
+body{margin:0;background:var(--bg);color:var(--txt);font:16px/1.6 system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;min-height:100vh}
+.mark{position:fixed;inset:0;margin:auto;width:min(60vw,60vh);opacity:.08;pointer-events:none;user-select:none;z-index:-1}
 .wrap{max-width:960px;margin:0 auto;padding:0 16px}
-header{padding:72px 0 40px;text-align:center}
-h1{font-size:clamp(2rem,6vw,3.2rem);margin:0 0 8px;letter-spacing:-.02em}
+.top{display:flex;justify-content:flex-end;padding-top:14px}
+.lang button{background:rgba(15,23,42,.8);color:var(--mut);border:1px solid var(--line);padding:4px 12px;cursor:pointer;font:inherit;font-size:.85rem}
+.lang button:first-child{border-radius:8px 0 0 8px}.lang button:last-child{border-radius:0 8px 8px 0;border-left:0}
+.lang button.on{color:#a5f3fc;background:rgba(6,182,212,.2);border-color:rgba(6,182,212,.5)}
+.alpha{background:rgba(69,26,3,.55);border:1px solid rgba(180,83,9,.6);color:#fde68a;border-radius:12px;padding:12px 16px;margin-top:14px;font-size:.92rem}
+header{padding:28px 0 36px;text-align:center}
+.logo{width:min(260px,60vw);height:auto;filter:drop-shadow(0 8px 30px rgba(34,211,238,.18))}
+h1{font-size:clamp(1.8rem,5vw,2.6rem);margin:6px 0 8px;letter-spacing:-.02em}
 h1 span{color:var(--acc)}
+.badge{display:inline-block;font-size:.65rem;font-weight:600;letter-spacing:.08em;background:rgba(8,51,68,.8);color:#22d3ee;border:1px solid rgba(21,94,117,.6);padding:2px 10px;border-radius:999px;vertical-align:middle;margin-left:10px;font-family:ui-monospace,Consolas,monospace}
 .lead{color:var(--mut);max-width:620px;margin:0 auto 28px}
-.btn{display:inline-block;background:linear-gradient(135deg,var(--acc),var(--acc2));color:#04121c;font-weight:700;padding:14px 28px;border-radius:12px;text-decoration:none;font-size:1.05rem}
-.btn:hover{filter:brightness(1.1)}
+.btn{display:inline-block;background:var(--acc2);color:#04121c;font-weight:700;padding:14px 28px;border-radius:12px;text-decoration:none;font-size:1.05rem;border:1px solid var(--acc)}
+.btn:hover{background:var(--acc)}
+.btn.sec{background:rgba(6,182,212,.12);color:#a5f3fc;border:1px solid rgba(6,182,212,.4);padding:10px 20px;font-size:.95rem;font-weight:600}
+.btn.sec:hover{background:rgba(6,182,212,.22)}
+.btn.off{opacity:.5;pointer-events:none}
 .meta{color:var(--mut);font-size:.85rem;margin-top:12px}
 .grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));margin:20px 0}
 .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px}
 .card h3{margin:0 0 6px;font-size:1rem;color:var(--acc)}
 .card p{margin:0;color:var(--mut);font-size:.92rem}
 h2{margin:44px 0 8px;font-size:1.4rem}
-.note{background:var(--card);border:1px solid var(--line);border-left:4px solid #fbbf24;border-radius:10px;padding:14px 16px;color:var(--mut);font-size:.92rem}
+.note{background:var(--card);border:1px solid var(--line);border-left:4px solid #f59e0b;border-radius:10px;padding:14px 16px;color:var(--mut);font-size:.92rem}
 .note b{color:var(--txt)}
 ol{color:var(--mut);padding-left:20px}
 details{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 16px;margin:8px 0}
 summary{cursor:pointer;font-weight:600}
 details p{color:var(--mut);margin:8px 0 0;font-size:.92rem}
+.tag{display:inline-block;min-width:78px;text-align:center;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;border:1px solid;border-radius:5px;padding:1px 6px;margin-right:8px}
+.t-new{color:#6ee7b7;background:rgba(16,185,129,.15);border-color:rgba(16,185,129,.4)}
+.t-fixed{color:#fda4af;background:rgba(244,63,94,.15);border-color:rgba(244,63,94,.4)}
+.t-improved{color:#67e8f9;background:rgba(6,182,212,.15);border-color:rgba(6,182,212,.4)}
+.chg{margin:6px 0;font-size:.92rem;color:var(--mut)}
+.rm{display:grid;gap:10px}
+.rm .card h3{color:var(--txt)}
+.st{font-size:.7rem;color:var(--acc);text-transform:uppercase;letter-spacing:.06em}
+.goal{display:flex;gap:10px;align-items:flex-start;margin:8px 0;color:var(--mut)}
+.goal i{font-style:normal;color:var(--acc)}
+.row{display:flex;flex-wrap:wrap;gap:12px;margin-top:14px}
 footer{margin:56px 0 32px;padding-top:20px;border-top:1px solid var(--line);color:var(--mut);font-size:.8rem;text-align:center}
 a{color:var(--acc)}
+.btn,.btn.sec{color:inherit}
+.btn{color:#04121c}.btn.sec{color:#a5f3fc}
 </style>
 </head>
 <body>
+<img class="mark" src="logo.png" alt="" aria-hidden="true">
 <div class="wrap">
+<div class="top"><div class="lang"><button data-l="es">ES</button><button data-l="en">EN</button></div></div>
+<div class="alpha" data-t="alpha"></div>
 <header>
-  <h1>Master<span>Crafter</span></h1>
-  <p class="lead">Todo lo que necesitas para AION 2 en una sola app para Windows: medidor de DPS, avisos de eventos, calculadora de crafteo y explorador de base de datos.</p>
-  <a class="btn" id="dl" href="https://github.com/MasterCrafter-AION2/MasterCrafter-releases/releases/latest/download/MasterCrafter-setup.exe">Descargar para Windows</a>
-  <div class="meta" id="meta">Windows 10/11 · 64 bits · gratis</div>
+  <img class="logo" src="logo.png" alt="MasterCrafter">
+  <h1>Master<span>Crafter</span><span class="badge">PRE-ALPHA</span></h1>
+  <p class="lead" data-t="lead"></p>
+  <a class="btn" id="dl" href="https://github.com/MasterCrafter-AION2/MasterCrafter-releases/releases/latest/download/MasterCrafter-setup.exe" data-t="download"></a>
+  <div class="meta" id="meta"></div>
 </header>
 
-<section class="grid" aria-label="Funciones">
-  <div class="card"><h3>Medidor de DPS</h3><p>Daño por combate y por jugador, con jefes y mazmorras reconocidos. Funciona en local.</p></div>
-  <div class="card"><h3>Avisos de eventos</h3><p>Alertas de eventos y jefes para que no se te pase ninguno.</p></div>
-  <div class="card"><h3>Calculadora de crafteo</h3><p>Elige una mesa de trabajo y calcula el coste en Kinah desglosando subcomponentes, con imágenes oficiales.</p></div>
-  <div class="card"><h3>Base de datos</h3><p>Explora objetos, jefes y mazmorras sin salir de la app.</p></div>
-  <div class="card"><h3>Perfiles de personaje</h3><p>Busca personajes y revisa su equipo.</p></div>
-  <div class="card"><h3>Actualizaciones integradas</h3><p>La app te avisa de versiones nuevas y las instala con un clic.</p></div>
+<section class="grid">
+  <div class="card"><h3 data-t="f1h"></h3><p data-t="f1p"></p></div>
+  <div class="card"><h3 data-t="f2h"></h3><p data-t="f2p"></p></div>
+  <div class="card"><h3 data-t="f3h"></h3><p data-t="f3p"></p></div>
+  <div class="card"><h3 data-t="f4h"></h3><p data-t="f4p"></p></div>
+  <div class="card"><h3 data-t="f5h"></h3><p data-t="f5p"></p></div>
+  <div class="card"><h3 data-t="f6h"></h3><p data-t="f6p"></p></div>
 </section>
 
-<h2>Instalación</h2>
+<h2 data-t="install"></h2>
 <ol>
-  <li>Descarga el instalador con el botón de arriba.</li>
-  <li>Ábrelo y sigue el asistente.</li>
-  <li>Para el medidor de DPS instala <a href="https://npcap.com/#download" rel="noopener">Npcap</a> y ejecuta la app como administrador.</li>
+  <li data-t="i1"></li>
+  <li data-t="i2"></li>
+  <li><span data-t="i3"></span> <a href="https://npcap.com/#download" rel="noopener">Npcap</a></li>
 </ol>
-<div class="note"><b>Aviso de Windows SmartScreen.</b> Al ejecutar el instalador puede aparecer "Windows protegió su PC", porque la app aún no tiene un certificado de editor de pago. Pulsa <b>Más información</b> y luego <b>Ejecutar de todas formas</b>. Puedes verificar tu descarga comparando su SHA-256 con el archivo <a href="https://github.com/MasterCrafter-AION2/MasterCrafter-releases/releases/latest/download/SHA256SUMS.txt">SHA256SUMS.txt</a>.</div>
+<div class="note" data-t="smart"></div>
 
-<h2>Preguntas frecuentes</h2>
-<details><summary>¿Es gratis?</summary><p>Sí.</p></details>
-<details><summary>¿Por qué pide permisos de administrador?</summary><p>El medidor de DPS lee el tráfico de red del juego en tu equipo, y eso lo exige Windows. No envía esa captura a ningún servidor.</p></details>
-<details><summary>¿Cómo me actualizo?</summary><p>Ajustes › Actualizaciones › Buscar actualización. Las versiones van firmadas digitalmente.</p></details>
-<details><summary>¿Puedo ser sancionado por usarla?</summary><p>MasterCrafter no modifica ni inyecta nada en el juego. Aun así, es un proyecto independiente y las normas de uso son responsabilidad de cada jugador.</p></details>
+<h2 data-t="fbh"></h2>
+<p class="meta" data-t="fbp"></p>
+<div class="row">
+  <a class="btn sec" href="https://github.com/MasterCrafter-AION2/MasterCrafter-releases/issues/new?template=bug.yml" data-t="fbbug"></a>
+  <a class="btn sec" href="https://github.com/MasterCrafter-AION2/MasterCrafter-releases/issues/new?template=sugerencia.yml" data-t="fbsug"></a>
+</div>
+<p class="meta" data-t="fbnote"></p>
 
-<h2>Historial de versiones</h2>
-<div id="rel" class="meta">Cargando…</div>
+<h2 data-t="rmh"></h2>
+<p class="meta" data-t="rmp"></p>
+<div class="rm">
+  <div class="card"><span class="st" data-t="rm_s1"></span><h3 data-t="rm1h"></h3><p data-t="rm1p"></p></div>
+  <div class="card"><span class="st" data-t="rm_s2"></span><h3 data-t="rm2h"></h3><p data-t="rm2p"></p></div>
+  <div class="card"><span class="st" data-t="rm_s2"></span><h3 data-t="rm3h"></h3><p data-t="rm3p"></p></div>
+  <div class="card"><span class="st" data-t="rm_s2"></span><h3 data-t="rm4h"></h3><p data-t="rm4p"></p></div>
+</div>
 
-<footer>MasterCrafter es un proyecto de fans, independiente y sin afiliación con NCSOFT. AION es marca de sus propietarios.</footer>
+<h2 data-t="sph"></h2>
+<p class="meta" data-t="spp"></p>
+<div class="goal"><i>◆</i><span data-t="g1"></span></div>
+<div class="goal"><i>◆</i><span data-t="g2"></span></div>
+<div class="goal"><i>◆</i><span data-t="g3"></span></div>
+<div class="goal"><i>◆</i><span data-t="g4"></span></div>
+<div class="row"><a class="btn sec off" href="#" aria-disabled="true" data-t="spbtn"></a></div>
+
+<h2 data-t="faqh"></h2>
+<details><summary data-t="q1"></summary><p data-t="a1"></p></details>
+<details><summary data-t="q2"></summary><p data-t="a2"></p></details>
+<details><summary data-t="q3"></summary><p data-t="a3"></p></details>
+<details><summary data-t="q4"></summary><p data-t="a4"></p></details>
+
+<h2 data-t="hist"></h2>
+<div id="rel" class="meta"></div>
+
+<footer data-t="foot"></footer>
 </div>
 <script>
 (function(){
-  var api='https://api.github.com/repos/MasterCrafter-AION2/MasterCrafter-releases/releases';
-  fetch(api).then(function(r){return r.json()}).then(function(list){
-    if(!Array.isArray(list)||!list.length)throw 0;
-    var cur=list[0];
-    document.getElementById('meta').textContent='Versión '+cur.tag_name.replace(/^v/,'')+' · Windows 10/11 · 64 bits · gratis';
-    var box=document.getElementById('rel');box.className='';box.textContent='';
-    list.forEach(function(r){
-      var d=document.createElement('details');if(r===cur)d.open=true;
-      var s=document.createElement('summary');
-      s.textContent=r.tag_name+' · '+new Date(r.published_at).toLocaleDateString('es');
-      var p=document.createElement('p');p.style.whiteSpace='pre-wrap';
-      p.textContent=(r.body||'').replace(/\*\*/g,'');
-      d.appendChild(s);d.appendChild(p);box.appendChild(d);
-    });
-  }).catch(function(){document.getElementById('rel').textContent='Consulta el historial en la sección Releases del repositorio.'});
+var T={
+es:{
+alpha:"<b>Proyecto en desarrollo · prealfa.</b> La app irá cambiando y puede tener errores. Tu retroalimentación es muy importante: cuéntanos qué falla y qué te gustaría ver.",
+lead:"Todo lo que necesitas para AION 2 en una sola app para Windows: medidor de DPS, avisos de eventos, calculadora de crafteo y explorador de base de datos.",
+download:"Descargar para Windows",
+f1h:"Medidor de DPS",f1p:"Daño por combate y por jugador, con jefes y mazmorras reconocidos. Funciona en local.",
+f2h:"Avisos de eventos",f2p:"Alertas de eventos y jefes para que no se te pase ninguno.",
+f3h:"Calculadora de crafteo",f3p:"Elige una mesa de trabajo y calcula el coste en Kinah desglosando subcomponentes, con imágenes oficiales.",
+f4h:"Base de datos",f4p:"Explora objetos, jefes y mazmorras sin salir de la app.",
+f5h:"Perfiles de personaje",f5p:"Busca personajes y revisa su equipo.",
+f6h:"Actualizaciones integradas",f6p:"La app te avisa de versiones nuevas y las instala con un clic.",
+install:"Instalación",
+i1:"Descarga el instalador con el botón de arriba.",i2:"Ábrelo y sigue el asistente.",i3:"Para el medidor de DPS instala",
+smart:"<b>Aviso de Windows SmartScreen.</b> Al ejecutar el instalador puede aparecer «Windows protegió su PC», porque la app aún no tiene un certificado de editor de pago. Pulsa <b>Más información</b> y luego <b>Ejecutar de todas formas</b>. Puedes verificar tu descarga comparando su SHA-256 con <a href=\"https://github.com/MasterCrafter-AION2/MasterCrafter-releases/releases/latest/download/SHA256SUMS.txt\">SHA256SUMS.txt</a>.",
+fbh:"Retroalimentación",fbp:"Al ser una prealfa, tus reportes y sugerencias son lo que más nos ayuda a mejorar.",
+fbbug:"Reportar un error",fbsug:"Enviar una sugerencia",
+fbnote:"Se abre un formulario en GitHub (necesitas una cuenta gratuita). Los reportes quedan guardados y son públicos; no incluyas datos personales.",
+rmh:"Hoja de ruta",rmp:"Ideas y planes sujetos a cambios, sin fechas.",
+rm_s1:"En curso",rm_s2:"Planeado",
+rm1h:"Pulir la prealfa",rm1p:"Corregir errores y ajustar lo que más nos reporten.",
+rm2h:"Firma de código (Authenticode)",rm2p:"Quitar la advertencia de SmartScreen con un certificado de editor.",
+rm3h:"Rastreador comunitario de jefes",rm3p:"Idea: horarios de reaparición compartidos entre jugadores, con privacidad por diseño. En evaluación.",
+rm4h:"Más módulos y datos",rm4p:"Ampliar la base de datos y las herramientas según lo que pida la comunidad.",
+sph:"Ayúdanos a llegar más lejos",spp:"MasterCrafter es gratis. Si quieres apoyar el proyecto, estas son las metas que nos ayudarías a cumplir:",
+g1:"Certificado de firma de código para que Windows confíe en el instalador.",
+g2:"Dominio propio y una dirección de descarga más fácil de recordar.",
+g3:"Servidor en la nube para el rastreador comunitario de jefes.",
+g4:"Tiempo de desarrollo para corregir errores y añadir funciones más rápido.",
+spbtn:"Apoyar el proyecto (próximamente)",
+faqh:"Preguntas frecuentes",
+q1:"¿Es gratis?",a1:"Sí.",
+q2:"¿Por qué pide permisos de administrador?",a2:"El medidor de DPS lee el tráfico de red del juego en tu equipo, y Windows lo exige. No envía esa captura a ningún servidor.",
+q3:"¿Cómo me actualizo?",a3:"Ajustes › Actualizaciones › Buscar actualización. Las versiones van firmadas digitalmente.",
+q4:"¿Puedo ser sancionado por usarla?",a4:"MasterCrafter no modifica ni inyecta nada en el juego. Aun así es un proyecto independiente y las normas de uso son responsabilidad de cada jugador.",
+hist:"Historial de versiones",hload:"Cargando…",hfail:"Consulta el historial en la sección Releases del repositorio.",
+ver:"Versión",req:"Windows 10/11 · 64 bits · gratis",
+tags:{"new":"Nuevo",fixed:"Corregido",improved:"Mejorado"},
+foot:"MasterCrafter es un proyecto de fans, independiente y sin afiliación con NCSOFT. AION es marca de sus propietarios."
+},
+en:{
+alpha:"<b>Work in progress · pre-alpha.</b> The app will keep changing and may have bugs. Your feedback is very important: tell us what breaks and what you would like to see.",
+lead:"Everything you need for AION 2 in one Windows app: DPS meter, event alerts, crafting calculator and database explorer.",
+download:"Download for Windows",
+f1h:"DPS meter",f1p:"Damage per fight and per player, with bosses and dungeons recognized. Runs locally.",
+f2h:"Event alerts",f2p:"Event and boss alerts so you never miss one.",
+f3h:"Crafting calculator",f3p:"Pick a work station and get the Kinah cost with a step-by-step breakdown of subcomponents, using official images.",
+f4h:"Database",f4p:"Browse items, bosses and dungeons without leaving the app.",
+f5h:"Character profiles",f5p:"Search characters and check their gear.",
+f6h:"Built-in updates",f6p:"The app tells you about new versions and installs them in one click.",
+install:"Installation",
+i1:"Download the installer with the button above.",i2:"Open it and follow the wizard.",i3:"For the DPS meter, install",
+smart:"<b>Windows SmartScreen warning.</b> Running the installer may show “Windows protected your PC”, because the app does not yet have a paid publisher certificate. Click <b>More info</b>, then <b>Run anyway</b>. You can verify your download by comparing its SHA-256 with <a href=\"https://github.com/MasterCrafter-AION2/MasterCrafter-releases/releases/latest/download/SHA256SUMS.txt\">SHA256SUMS.txt</a>.",
+fbh:"Feedback",fbp:"Since this is a pre-alpha, your reports and suggestions are what help us improve the most.",
+fbbug:"Report a bug",fbsug:"Send a suggestion",
+fbnote:"A form opens on GitHub (you need a free account). Reports are stored and public; do not include personal data.",
+rmh:"Roadmap",rmp:"Ideas and plans, subject to change, no dates.",
+rm_s1:"In progress",rm_s2:"Planned",
+rm1h:"Polish the pre-alpha",rm1p:"Fix bugs and tune what you report most.",
+rm2h:"Code signing (Authenticode)",rm2p:"Remove the SmartScreen warning with a publisher certificate.",
+rm3h:"Community boss tracker",rm3p:"Idea: respawn times shared among players, private by design. Under evaluation.",
+rm4h:"More modules and data",rm4p:"Expand the database and tools based on what the community asks for.",
+sph:"Help us go further",spp:"MasterCrafter is free. If you want to support the project, these are the goals you would help us reach:",
+g1:"A code-signing certificate so Windows trusts the installer.",
+g2:"Our own domain and an easier-to-remember download address.",
+g3:"A cloud server for the community boss tracker.",
+g4:"Development time to fix bugs and add features faster.",
+spbtn:"Support the project (coming soon)",
+faqh:"FAQ",
+q1:"Is it free?",a1:"Yes.",
+q2:"Why does it ask for administrator rights?",a2:"The DPS meter reads the game's network traffic on your PC, which Windows requires. It does not send that capture to any server.",
+q3:"How do I update?",a3:"Settings › Updates › Check for updates. Releases are digitally signed.",
+q4:"Can I get banned for using it?",a4:"MasterCrafter does not modify or inject anything into the game. Still, it is an independent project and following the rules is each player's responsibility.",
+hist:"Version history",hload:"Loading…",hfail:"See the history in the repository's Releases section.",
+ver:"Version",req:"Windows 10/11 · 64-bit · free",
+tags:{"new":"New",fixed:"Fixed",improved:"Improved"},
+foot:"MasterCrafter is an independent fan project, not affiliated with NCSOFT. AION is a trademark of its owners."
+}};
+var L='es',rels=null;
+try{L=localStorage.getItem('mc-lang')||''}catch(e){}
+if(L!=='es'&&L!=='en')L=(navigator.language||'es').slice(0,2)==='en'?'en':'es';
+function esc(s){var d=document.createElement('div');d.textContent=s;return d.innerHTML}
+function parse(b){var m=/<!--changes:([\s\S]*?)-->/.exec(b||'');if(!m)return null;try{return JSON.parse(m[1]).changes}catch(e){return null}}
+function renderRel(){
+  var box=document.getElementById('rel'),t=T[L];
+  if(rels===null){box.textContent=t.hload;return}
+  if(!rels.length){box.textContent=t.hfail;return}
+  box.className='';box.innerHTML='';
+  rels.forEach(function(r,i){
+    var d=document.createElement('details');if(i===0)d.open=true;
+    var s=document.createElement('summary');
+    s.textContent=r.tag_name+' · '+new Date(r.published_at).toLocaleDateString(L);
+    d.appendChild(s);
+    var ch=parse(r.body);
+    if(ch){ch.forEach(function(c){var p=document.createElement('div');p.className='chg';
+      p.innerHTML='<span class="tag t-'+esc(c.type)+'">'+esc(t.tags[c.type]||c.type)+'</span>'+esc(c[L]||c.es);d.appendChild(p)})}
+    else{var p=document.createElement('p');p.textContent=(r.body||'').replace(/\*\*/g,'');d.appendChild(p)}
+    box.appendChild(d);
+  });
+  document.getElementById('meta').textContent=t.ver+' '+rels[0].tag_name.replace(/^v/,'')+' · '+t.req;
+}
+function apply(){
+  var t=T[L];document.documentElement.lang=L;
+  document.querySelectorAll('[data-t]').forEach(function(e){var v=t[e.dataset.t];if(v!==undefined){e.innerHTML=v}});
+  document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.dataset.l===L)});
+  document.getElementById('meta').textContent=t.req;
+  renderRel();
+}
+document.querySelectorAll('.lang button').forEach(function(b){b.onclick=function(){L=b.dataset.l;try{localStorage.setItem('mc-lang',L)}catch(e){}apply()}});
+apply();
+fetch('https://api.github.com/repos/MasterCrafter-AION2/MasterCrafter-releases/releases').then(function(r){return r.json()}).then(function(l){rels=Array.isArray(l)?l:[];apply()}).catch(function(){rels=[];apply()});
 })();
 </script>
 </body>

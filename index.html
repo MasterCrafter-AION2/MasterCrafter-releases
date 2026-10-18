@@ -138,17 +138,53 @@ footer{margin:56px 0 32px;padding-top:20px;border-top:1px solid var(--line);colo
 
 .rv{opacity:0;transform:translateY(16px);transition:opacity .6s var(--ease),transform .6s var(--ease);transition-delay:var(--d,0s)}
 .rv.in{opacity:1;transform:none}
+/* navegación fija + progreso */
+.nav{position:sticky;top:0;z-index:20;background:rgba(11,15,25,.82);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.navin{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 16px}
+.links{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;scroll-behavior:smooth}
+.links::-webkit-scrollbar{display:none}
+.links a{color:var(--mut);text-decoration:none;font-size:.85rem;padding:6px 11px;border-radius:8px;white-space:nowrap;transition:color .2s,background .2s}
+.links a:hover{color:var(--txt)}
+.links a.on{color:#a5f3fc;background:rgba(6,182,212,.15)}
+.prog{position:absolute;left:0;right:0;bottom:-1px;height:2px;background:linear-gradient(90deg,var(--acc2),var(--acc));transform:scaleX(0);transform-origin:left}
+h2,section{scroll-margin-top:64px}
+
+/* entrada de la cabecera */
+@keyframes up{from{opacity:0;translate:0 18px}to{opacity:1;translate:0 0}}
+@keyframes pop{from{opacity:0;scale:.86}to{opacity:1;scale:1}}
+header>*{opacity:0;animation:up .8s var(--ease) both;animation-delay:calc(var(--i,0)*.12s)}
+header>.logo{animation:pop .9s var(--ease) both,float 6s ease-in-out 1s infinite}
+header>:nth-child(2){--i:1}header>:nth-child(3){--i:2}header>:nth-child(4){--i:3}header>:nth-child(5){--i:4}header>:nth-child(6){--i:5}
+
+/* subrayado de títulos, brillo de botón, cascada del historial */
+h2{position:relative}
+h2::after{content:"";display:block;width:52px;height:3px;border-radius:3px;margin-top:6px;background:linear-gradient(90deg,var(--acc),transparent);transform:scaleX(0);transform-origin:left;transition:transform .8s var(--ease) .25s}
+h2.in::after{transform:scaleX(1)}
+.btn{position:relative;overflow:hidden}
+.btn:not(.sec):not(.off)::after{content:"";position:absolute;top:0;left:-60%;width:40%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.4),transparent);transform:skewX(-20deg);transition:left .7s var(--ease)}
+.btn:not(.sec):not(.off):hover::after{left:130%}
+.btn:active{transform:scale(.97)}
+.hist[open] .cm{animation:up .45s var(--ease) both;animation-delay:calc(var(--i,0)*.06s)}
+
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
   .rv{opacity:1;transform:none}.tl::after{transform:none}
+  header>*{opacity:1}h2::after{transform:scaleX(1)}
 }
 @media (max-width:520px){.tl{padding-left:50px}.ms .ic{left:-50px;width:36px;height:36px}.tl::before,.tl::after{left:17px}.qa .bd p{padding-left:16px}}
 </style>
 </head>
 <body>
 <img class="mark" src="logo.png" alt="" aria-hidden="true">
+<nav class="nav" aria-label="Secciones">
+  <div class="wrap navin">
+    <div class="links" id="links"><a href="#features" data-t="n1"></a><a href="#install" data-t="n2"></a><a href="#feedback" data-t="n3"></a><a href="#roadmap" data-t="n4"></a><a href="#faqs" data-t="n5"></a><a href="#versions" data-t="n6"></a></div>
+    <div class="lang"><button data-l="es">ES</button><button data-l="en">EN</button></div>
+  </div>
+  <i class="prog" id="prog"></i>
+</nav>
 <div class="wrap">
-<div class="top"><div class="lang"><button data-l="es">ES</button><button data-l="en">EN</button></div></div>
 <header>
   <img class="logo" src="logo.png" alt="MasterCrafter">
   <h1>Master<span>Crafter</span></h1>
@@ -158,7 +194,7 @@ footer{margin:56px 0 32px;padding-top:20px;border-top:1px solid var(--line);colo
   <div class="meta" id="meta"></div>
 </header>
 
-<section class="grid">
+<section class="grid" id="features">
   <div class="card rv"><h3 data-t="f1h"></h3><p data-t="f1p"></p></div>
   <div class="card rv" style="--d:.05s"><h3 data-t="f2h"></h3><p data-t="f2p"></p></div>
   <div class="card rv" style="--d:.1s"><h3 data-t="f3h"></h3><p data-t="f3p"></p></div>
@@ -167,7 +203,7 @@ footer{margin:56px 0 32px;padding-top:20px;border-top:1px solid var(--line);colo
   <div class="card rv" style="--d:.1s"><h3 data-t="f6h"></h3><p data-t="f6p"></p></div>
 </section>
 
-<h2 data-t="install"></h2>
+<h2 id="install" data-t="install"></h2>
 <ol>
   <li data-t="i1"></li>
   <li data-t="i2"></li>
@@ -194,7 +230,7 @@ footer{margin:56px 0 32px;padding-top:20px;border-top:1px solid var(--line);colo
 </form>
 <p class="meta" data-t="fbnote"></p>
 
-<h2 data-t="rmh"></h2>
+<h2 id="roadmap" data-t="rmh"></h2>
 <p class="sub" data-t="rmp"></p>
 <div class="tl" id="tl"></div>
 
@@ -206,10 +242,10 @@ footer{margin:56px 0 32px;padding-top:20px;border-top:1px solid var(--line);colo
 <div class="goal"><i>◆</i><span data-t="g4"></span></div>
 <div class="row"><a class="btn sec off" href="#" aria-disabled="true" data-t="spbtn"></a></div>
 
-<h2 data-t="faqh"></h2>
+<h2 id="faqs" data-t="faqh"></h2>
 <div class="faq" id="faq"></div>
 
-<h2 data-t="hist"></h2>
+<h2 id="versions" data-t="hist"></h2>
 <details class="hist" id="hist">
   <summary><span class="branch"><svg viewBox="0 0 24 24"><circle cx="6" cy="6" r="2.5"/><circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="8" r="2.5"/><path d="M6 8.5v7M18 10.5c0 4-12 2-12 5.5"/></svg>main</span><span id="hsum" class="hsum"></span><span class="sp"></span><i class="chev"></i></summary>
   <div class="graph" id="graph"></div>
@@ -221,6 +257,7 @@ footer{margin:56px 0 32px;padding-top:20px;border-top:1px solid var(--line);colo
 (function(){
 var T={
 es:{
+n1:"Funciones",n2:"Instalar",n3:"Opinar",n4:"Hoja de ruta",n5:"FAQ",n6:"Versiones",
 pill:"Prealfa · en desarrollo activo",
 lead:"Todo lo que necesitas para AION 2 en una sola app para Windows: medidor de DPS, avisos de eventos, calculadora de crafteo y explorador de base de datos.",
 download:"Descargar para Windows",
@@ -269,6 +306,7 @@ tags:{"new":"Nuevo",fixed:"Corregido",improved:"Mejorado"},
 foot:"MasterCrafter es un proyecto de fans, independiente y sin afiliación con NCSOFT. AION es marca de sus propietarios."
 },
 en:{
+n1:"Features",n2:"Install",n3:"Feedback",n4:"Roadmap",n5:"FAQ",n6:"Versions",
 pill:"Pre-alpha · under active development",
 lead:"Everything you need for AION 2 in one Windows app: DPS meter, event alerts, crafting calculator and database explorer.",
 download:"Download for Windows",
@@ -355,7 +393,7 @@ function renderRel(){
   g.innerHTML='';
   sum.textContent=rels[0].tag_name+' · '+rels.length+' '+(L==='en'?'releases':'versiones');
   rels.forEach(function(r,i){
-    var c=document.createElement('div');c.className='cm'+(i===0?' latest open':'');
+    var c=document.createElement('div');c.className='cm'+(i===0?' latest open':'');c.style.setProperty('--i',Math.min(i,10));
     var date=new Date(r.published_at).toLocaleDateString(L,{day:'numeric',month:'short',year:'numeric'});
     var ch=parse(r.body),body='';
     if(ch){body=ch.map(function(x){return '<div class="chg"><span class="tag t-'+esc(x.type)+'">'+esc(t.tags[x.type]||x.type)+'</span>'+esc(x[L]||x.es)+'</div>'}).join('')}
@@ -381,7 +419,16 @@ fb.onsubmit=function(e){e.preventDefault();var t=T[L],f=fb.elements;
   fetch('https://mastercrafter-feedback.andresjgsalzate.workers.dev',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({type:f.type.value,title:f.title.value,description:f.description.value,contact:f.contact.value,website:f.website.value,lang:L,version:rels&&rels[0]?rels[0].tag_name.replace(/^v/,''):''})})
   .then(function(r){if(!r.ok)throw 0;fb.reset();say('fbok','ok')}).catch(function(){say('fberr','err')}).then(function(){btn.disabled=false})};
 document.querySelectorAll('.lang button').forEach(function(b){b.onclick=function(){L=b.dataset.l;try{localStorage.setItem('mc-lang',L)}catch(e){}apply()}});
-apply();
+document.querySelectorAll('h2,.sub,.note,.form,.goal,ol li').forEach(function(e,i){e.classList.add('rv');if(e.matches('ol li,.goal'))e.style.setProperty('--d',(e.matches('ol li')?[...e.parentNode.children].indexOf(e):[...document.querySelectorAll('.goal')].indexOf(e))*.1+'s')});
+var prog=document.getElementById('prog'),links=[].slice.call(document.querySelectorAll('#links a')),tick=false;
+function onScroll(){tick=false;var h=document.documentElement,max=h.scrollHeight-h.clientHeight,cur=null;
+  prog.style.transform='scaleX('+(max>0?Math.min(1,h.scrollTop/max):0)+')';
+  links.forEach(function(a){var el=document.getElementById(a.getAttribute('href').slice(1));if(el&&el.getBoundingClientRect().top<=140)cur=a});
+  if(max>0&&h.scrollTop>=max-4)cur=links[links.length-1];
+  links.forEach(function(a){a.classList.toggle('on',a===cur)});
+  if(cur){var p=cur.parentNode;p.scrollLeft=cur.offsetLeft-p.clientWidth/2+cur.clientWidth/2}}
+window.addEventListener('scroll',function(){if(!tick){tick=true;requestAnimationFrame(onScroll)}},{passive:true});
+apply();onScroll();
 fetch('https://api.github.com/repos/MasterCrafter-AION2/MasterCrafter-releases/releases').then(function(r){return r.json()}).then(function(l){rels=Array.isArray(l)?l:[];renderRel()}).catch(function(){rels=[];renderRel()});
 })();
 </script>

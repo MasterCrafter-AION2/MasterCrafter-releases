@@ -7,49 +7,49 @@
 <meta name="description" content="MasterCrafter (prealfa): DPS meter, event alerts, crafting calculator and database explorer for AION 2.">
 <link rel="icon" type="image/png" href="logo-64.png">
 <style>
-:root{--bg:#0b0f19;--card:rgba(15,23,42,.7);--line:#1e293b;--txt:#e2e8f0;--mut:#94a3b8;--acc:#22d3ee;--acc2:#06b6d4}
+:root{--bg:#0b0f19;--card:rgba(15,23,42,.7);--line:#1e293b;--txt:#e2e8f0;--mut:#94a3b8;--acc:#22d3ee;--acc2:#06b6d4;--ease:cubic-bezier(.2,.7,.2,1)}
 *{box-sizing:border-box}
+html{scroll-behavior:smooth}
 body{margin:0;background:var(--bg);color:var(--txt);font:16px/1.6 system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;min-height:100vh}
-.mark{position:fixed;inset:0;margin:auto;width:min(60vw,60vh);opacity:.08;pointer-events:none;user-select:none;z-index:-1}
+.mark{position:fixed;inset:0;margin:auto;width:min(60vw,60vh);opacity:.07;pointer-events:none;user-select:none;z-index:-1}
 .wrap{max-width:960px;margin:0 auto;padding:0 16px}
 .top{display:flex;justify-content:flex-end;padding-top:14px}
 .lang button{background:rgba(15,23,42,.8);color:var(--mut);border:1px solid var(--line);padding:4px 12px;cursor:pointer;font:inherit;font-size:.85rem}
 .lang button:first-child{border-radius:8px 0 0 8px}.lang button:last-child{border-radius:0 8px 8px 0;border-left:0}
 .lang button.on{color:#a5f3fc;background:rgba(6,182,212,.2);border-color:rgba(6,182,212,.5)}
-.alpha{background:rgba(69,26,3,.55);border:1px solid rgba(180,83,9,.6);color:#fde68a;border-radius:12px;padding:12px 16px;margin-top:14px;font-size:.92rem}
-header{padding:28px 0 36px;text-align:center}
-.logo{width:min(260px,60vw);height:auto;filter:drop-shadow(0 8px 30px rgba(34,211,238,.18))}
-h1{font-size:clamp(1.8rem,5vw,2.6rem);margin:6px 0 8px;letter-spacing:-.02em}
+header{padding:24px 0 36px;text-align:center}
+.logo{width:min(260px,60vw);height:auto;filter:drop-shadow(0 8px 30px rgba(34,211,238,.18));animation:float 6s ease-in-out infinite}
+@keyframes float{50%{transform:translateY(-6px)}}
+h1{font-size:clamp(1.8rem,5vw,2.6rem);margin:6px 0 10px;letter-spacing:-.02em}
 h1 span{color:var(--acc)}
-.badge{display:inline-block;font-size:.65rem;font-weight:600;letter-spacing:.08em;background:rgba(8,51,68,.8);color:#22d3ee;border:1px solid rgba(21,94,117,.6);padding:2px 10px;border-radius:999px;vertical-align:middle;margin-left:10px;font-family:ui-monospace,Consolas,monospace}
+.pill{display:inline-flex;align-items:center;gap:8px;font-size:.78rem;color:#fde68a;background:rgba(69,26,3,.45);border:1px solid rgba(180,83,9,.5);padding:3px 12px;border-radius:999px;margin-bottom:14px}
+.dot{width:8px;height:8px;border-radius:50%;background:#f59e0b;position:relative;flex:none;display:inline-block}
+.dot::after{content:"";position:absolute;inset:0;border-radius:50%;background:inherit;animation:ping 1.8s ease-out infinite}
+@keyframes ping{to{transform:scale(2.8);opacity:0}}
 .lead{color:var(--mut);max-width:620px;margin:0 auto 28px}
-.btn{display:inline-block;background:var(--acc2);color:#04121c;font-weight:700;padding:14px 28px;border-radius:12px;text-decoration:none;font-size:1.05rem;border:1px solid var(--acc)}
-.btn:hover{background:var(--acc)}
+.btn{display:inline-block;background:var(--acc2);color:#04121c;font-weight:700;padding:14px 28px;border-radius:12px;text-decoration:none;font-size:1.05rem;border:1px solid var(--acc);transition:transform .2s var(--ease),background .2s}
+.btn:hover{background:var(--acc);transform:translateY(-2px)}
 .btn.sec{background:rgba(6,182,212,.12);color:#a5f3fc;border:1px solid rgba(6,182,212,.4);padding:10px 20px;font-size:.95rem;font-weight:600}
 .btn.sec:hover{background:rgba(6,182,212,.22)}
 .btn.off{opacity:.5;pointer-events:none}
 .meta{color:var(--mut);font-size:.85rem;margin-top:12px}
 .grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));margin:20px 0}
-.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;transition:border-color .25s,transform .25s var(--ease)}
+.grid .card:hover{border-color:rgba(6,182,212,.5);transform:translateY(-3px)}
 .card h3{margin:0 0 6px;font-size:1rem;color:var(--acc)}
 .card p{margin:0;color:var(--mut);font-size:.92rem}
-h2{margin:44px 0 8px;font-size:1.4rem}
+h2{margin:52px 0 8px;font-size:1.4rem}
+.sub{color:var(--mut);margin:0 0 8px;font-size:.95rem}
 .note{background:var(--card);border:1px solid var(--line);border-left:4px solid #f59e0b;border-radius:10px;padding:14px 16px;color:var(--mut);font-size:.92rem}
 .note b{color:var(--txt)}
 ol{color:var(--mut);padding-left:20px}
-details{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 16px;margin:8px 0}
-summary{cursor:pointer;font-weight:600}
-details p{color:var(--mut);margin:8px 0 0;font-size:.92rem}
-.tag{display:inline-block;min-width:78px;text-align:center;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;border:1px solid;border-radius:5px;padding:1px 6px;margin-right:8px}
-.t-new{color:#6ee7b7;background:rgba(16,185,129,.15);border-color:rgba(16,185,129,.4)}
-.t-fixed{color:#fda4af;background:rgba(244,63,94,.15);border-color:rgba(244,63,94,.4)}
-.t-improved{color:#67e8f9;background:rgba(6,182,212,.15);border-color:rgba(6,182,212,.4)}
-.chg{margin:6px 0;font-size:.92rem;color:var(--mut)}
-.rm{display:grid;gap:10px}
-.rm .card h3{color:var(--txt)}
-.st{font-size:.7rem;color:var(--acc);text-transform:uppercase;letter-spacing:.06em}
-.goal{display:flex;gap:10px;align-items:flex-start;margin:8px 0;color:var(--mut)}
-.goal i{font-style:normal;color:var(--acc)}
+a{color:var(--acc)}
+
+.status{display:flex;gap:16px;align-items:center;flex-wrap:wrap;margin-top:44px;padding:20px;border-radius:16px;border:1px solid rgba(180,83,9,.45);background:linear-gradient(135deg,rgba(69,26,3,.4),rgba(15,23,42,.7))}
+.status .txt{flex:1;min-width:240px}
+.status h3{margin:0 0 4px;font-size:1.05rem;color:#fde68a;display:flex;align-items:center;gap:10px}
+.status p{margin:0;color:var(--mut);font-size:.92rem}
+
 .form{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;display:grid;gap:12px;margin-top:14px}
 .form label{display:grid;gap:4px;font-size:.85rem;color:var(--mut)}
 .form input,.form select,.form textarea{background:#0b0f19;color:var(--txt);border:1px solid var(--line);border-radius:8px;padding:9px 11px;font:inherit;font-size:.95rem;width:100%}
@@ -60,32 +60,111 @@ details p{color:var(--mut);margin:8px 0 0;font-size:.92rem}
 .hp{position:absolute;left:-9999px;height:0;overflow:hidden}
 .msg{font-size:.9rem;min-height:1.2em}.msg.ok{color:#6ee7b7}.msg.err{color:#fda4af}
 .row{display:flex;flex-wrap:wrap;gap:12px;margin-top:14px}
+
+.tl{position:relative;margin:26px 0 0;padding-left:56px}
+.tl::before,.tl::after{content:"";position:absolute;left:19px;top:8px;bottom:8px;width:2px;border-radius:2px}
+.tl::before{background:var(--line)}
+.tl::after{background:linear-gradient(var(--acc),rgba(34,211,238,.1));transform-origin:top;transform:scaleY(0);transition:transform 1.6s var(--ease)}
+.tl.in::after{transform:scaleY(1)}
+.ms{position:relative;margin-bottom:18px}
+.ms .ic{position:absolute;left:-56px;top:2px;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:#0b0f19;border:2px solid var(--line);color:var(--mut);transition:.4s}
+.ms .ic svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.ms.now .ic{border-color:var(--acc);color:var(--acc);animation:glow 2.2s infinite}
+@keyframes glow{0%{box-shadow:0 0 0 0 rgba(34,211,238,.5)}70%{box-shadow:0 0 0 12px rgba(34,211,238,0)}100%{box-shadow:0 0 0 0 rgba(34,211,238,0)}}
+.ms .card{padding:16px 18px}
+.ms.now .card{border-color:rgba(6,182,212,.45);background:linear-gradient(135deg,rgba(6,182,212,.1),rgba(15,23,42,.7))}
+.ms:hover .ic{border-color:var(--acc);color:var(--acc)}
+.ms h3{color:var(--txt);font-size:1.05rem;display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:6px}
+.st{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;padding:2px 9px;border-radius:999px;border:1px solid}
+.st.now{color:#67e8f9;background:rgba(6,182,212,.15);border-color:rgba(6,182,212,.4)}
+.st.next{color:var(--mut);border-color:var(--line)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.chip{font-size:.72rem;color:#a5f3fc;background:rgba(6,182,212,.1);border:1px solid rgba(6,182,212,.25);padding:1px 9px;border-radius:999px}
+.chip a{color:inherit;text-decoration:none}
+
+.goal{display:flex;gap:10px;align-items:flex-start;margin:8px 0;color:var(--mut)}
+.goal i{font-style:normal;color:var(--acc)}
+
+.faq{display:grid;gap:10px;margin-top:14px}
+.qa{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;transition:border-color .25s,opacity .6s var(--ease),transform .6s var(--ease)}
+.qa.open{border-color:rgba(6,182,212,.5)}
+.qa>button{all:unset;box-sizing:border-box;width:100%;display:flex;align-items:center;gap:14px;padding:14px 16px;cursor:pointer}
+.qa>button:focus-visible{outline:2px solid var(--acc);outline-offset:-2px}
+.qa .n{flex:none;width:30px;height:30px;border-radius:9px;display:grid;place-items:center;font-size:.8rem;font-weight:700;color:var(--acc);background:rgba(6,182,212,.12);border:1px solid rgba(6,182,212,.3)}
+.qa .q{flex:1;font-weight:600}
+.qa .pl{flex:none;width:22px;height:22px;position:relative;color:var(--acc)}
+.qa .pl::before,.qa .pl::after{content:"";position:absolute;left:4px;right:4px;top:10px;height:2px;background:currentColor;border-radius:2px;transition:transform .3s var(--ease)}
+.qa .pl::after{transform:rotate(90deg)}
+.qa.open .pl::after{transform:rotate(0)}
+.qa .bd{display:grid;grid-template-rows:0fr;transition:grid-template-rows .35s var(--ease)}
+.qa.open .bd{grid-template-rows:1fr}
+.qa .bd>div{overflow:hidden}
+.qa .bd p{margin:0;padding:0 16px 16px 60px;color:var(--mut);font-size:.93rem}
+
+.hist{background:var(--card);border:1px solid var(--line);border-radius:14px;margin-top:14px;overflow:hidden}
+.hist>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:12px;padding:14px 16px;font-weight:600}
+.hist>summary::-webkit-details-marker{display:none}
+.branch{display:inline-flex;align-items:center;gap:6px;font:600 .78rem ui-monospace,Consolas,monospace;color:#a5f3fc;background:rgba(6,182,212,.12);border:1px solid rgba(6,182,212,.35);padding:2px 10px;border-radius:999px}
+.branch svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.hist .sp{flex:1}
+.hsum{color:var(--mut);font-size:.85rem;font-weight:400}
+.chev{width:10px;height:10px;border-right:2px solid var(--acc);border-bottom:2px solid var(--acc);transform:rotate(45deg);transition:transform .3s var(--ease);margin-right:4px;flex:none}
+.hist[open]>summary .chev{transform:rotate(-135deg)}
+.graph{position:relative;padding:4px 16px 14px 46px}
+.graph::before{content:"";position:absolute;left:25px;top:0;bottom:22px;width:2px;background:linear-gradient(var(--acc),rgba(34,211,238,.15))}
+.cm{position:relative;margin:0 0 4px}
+.cm::before{content:"";position:absolute;left:-27px;top:13px;width:12px;height:12px;border-radius:50%;background:var(--bg);border:2px solid var(--acc);transition:.25s}
+.cm.latest::before{background:var(--acc);box-shadow:0 0 0 4px rgba(34,211,238,.2)}
+.cm>button{all:unset;box-sizing:border-box;width:100%;display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:8px 10px;border-radius:8px;cursor:pointer}
+.cm>button:hover{background:rgba(6,182,212,.08)}
+.cm>button:focus-visible{outline:2px solid var(--acc)}
+.cm .v{font:700 .9rem ui-monospace,Consolas,monospace;color:#a5f3fc}
+.cm .d{color:var(--mut);font-size:.8rem;flex:1}
+.cm .lt{font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#6ee7b7;background:rgba(16,185,129,.15);border:1px solid rgba(16,185,129,.4);padding:0 7px;border-radius:999px}
+.cm .bd{display:grid;grid-template-rows:0fr;transition:grid-template-rows .3s var(--ease)}
+.cm.open .bd{grid-template-rows:1fr}
+.cm .bd>div{overflow:hidden;padding-left:10px}
+.cm.open::before{background:var(--acc)}
+.cm .chev{transform:rotate(45deg)}
+.cm.open .chev{transform:rotate(-135deg)}
+.tag{display:inline-block;min-width:78px;text-align:center;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;border:1px solid;border-radius:5px;padding:1px 6px;margin-right:8px}
+.t-new{color:#6ee7b7;background:rgba(16,185,129,.15);border-color:rgba(16,185,129,.4)}
+.t-fixed{color:#fda4af;background:rgba(244,63,94,.15);border-color:rgba(244,63,94,.4)}
+.t-improved{color:#67e8f9;background:rgba(6,182,212,.15);border-color:rgba(6,182,212,.4)}
+.chg{margin:4px 0;font-size:.9rem;color:var(--mut)}
+.chg:last-child{margin-bottom:10px}
+
 footer{margin:56px 0 32px;padding-top:20px;border-top:1px solid var(--line);color:var(--mut);font-size:.8rem;text-align:center}
-a{color:var(--acc)}
-.btn,.btn.sec{color:inherit}
-.btn{color:#04121c}.btn.sec{color:#a5f3fc}
+
+.rv{opacity:0;transform:translateY(16px);transition:opacity .6s var(--ease),transform .6s var(--ease);transition-delay:var(--d,0s)}
+.rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .rv{opacity:1;transform:none}.tl::after{transform:none}
+}
+@media (max-width:520px){.tl{padding-left:50px}.ms .ic{left:-50px;width:36px;height:36px}.tl::before,.tl::after{left:17px}.qa .bd p{padding-left:16px}}
 </style>
 </head>
 <body>
 <img class="mark" src="logo.png" alt="" aria-hidden="true">
 <div class="wrap">
 <div class="top"><div class="lang"><button data-l="es">ES</button><button data-l="en">EN</button></div></div>
-<div class="alpha" data-t="alpha"></div>
 <header>
   <img class="logo" src="logo.png" alt="MasterCrafter">
-  <h1>Master<span>Crafter</span><span class="badge">PRE-ALPHA</span></h1>
+  <h1>Master<span>Crafter</span></h1>
+  <div><span class="pill"><i class="dot"></i><span data-t="pill"></span></span></div>
   <p class="lead" data-t="lead"></p>
   <a class="btn" id="dl" href="https://github.com/MasterCrafter-AION2/MasterCrafter-releases/releases/latest/download/MasterCrafter-setup.exe" data-t="download"></a>
   <div class="meta" id="meta"></div>
 </header>
 
 <section class="grid">
-  <div class="card"><h3 data-t="f1h"></h3><p data-t="f1p"></p></div>
-  <div class="card"><h3 data-t="f2h"></h3><p data-t="f2p"></p></div>
-  <div class="card"><h3 data-t="f3h"></h3><p data-t="f3p"></p></div>
-  <div class="card"><h3 data-t="f4h"></h3><p data-t="f4p"></p></div>
-  <div class="card"><h3 data-t="f5h"></h3><p data-t="f5p"></p></div>
-  <div class="card"><h3 data-t="f6h"></h3><p data-t="f6p"></p></div>
+  <div class="card rv"><h3 data-t="f1h"></h3><p data-t="f1p"></p></div>
+  <div class="card rv" style="--d:.05s"><h3 data-t="f2h"></h3><p data-t="f2p"></p></div>
+  <div class="card rv" style="--d:.1s"><h3 data-t="f3h"></h3><p data-t="f3p"></p></div>
+  <div class="card rv"><h3 data-t="f4h"></h3><p data-t="f4p"></p></div>
+  <div class="card rv" style="--d:.05s"><h3 data-t="f5h"></h3><p data-t="f5p"></p></div>
+  <div class="card rv" style="--d:.1s"><h3 data-t="f6h"></h3><p data-t="f6p"></p></div>
 </section>
 
 <h2 data-t="install"></h2>
@@ -96,8 +175,13 @@ a{color:var(--acc)}
 </ol>
 <div class="note" data-t="smart"></div>
 
-<h2 data-t="fbh"></h2>
-<p class="meta" data-t="fbp"></p>
+<section class="status rv">
+  <div class="txt"><h3><i class="dot"></i><span data-t="sth"></span></h3><p data-t="stp"></p></div>
+  <a class="btn sec" href="#feedback" data-t="stbtn"></a>
+</section>
+
+<h2 id="feedback" data-t="fbh"></h2>
+<p class="sub" data-t="fbp"></p>
 <form class="form" id="fb" novalidate>
   <label><span data-t="fbtype"></span>
     <select name="type"><option value="bug" data-t="fbbug"></option><option value="suggestion" data-t="fbsug"></option></select></label>
@@ -111,16 +195,11 @@ a{color:var(--acc)}
 <p class="meta" data-t="fbnote"></p>
 
 <h2 data-t="rmh"></h2>
-<p class="meta" data-t="rmp"></p>
-<div class="rm">
-  <div class="card"><span class="st" data-t="rm_s1"></span><h3 data-t="rm1h"></h3><p data-t="rm1p"></p></div>
-  <div class="card"><span class="st" data-t="rm_s2"></span><h3 data-t="rm2h"></h3><p data-t="rm2p"></p></div>
-  <div class="card"><span class="st" data-t="rm_s2"></span><h3 data-t="rm3h"></h3><p data-t="rm3p"></p></div>
-  <div class="card"><span class="st" data-t="rm_s2"></span><h3 data-t="rm4h"></h3><p data-t="rm4p"></p></div>
-</div>
+<p class="sub" data-t="rmp"></p>
+<div class="tl" id="tl"></div>
 
 <h2 data-t="sph"></h2>
-<p class="meta" data-t="spp"></p>
+<p class="sub" data-t="spp"></p>
 <div class="goal"><i>◆</i><span data-t="g1"></span></div>
 <div class="goal"><i>◆</i><span data-t="g2"></span></div>
 <div class="goal"><i>◆</i><span data-t="g3"></span></div>
@@ -128,13 +207,13 @@ a{color:var(--acc)}
 <div class="row"><a class="btn sec off" href="#" aria-disabled="true" data-t="spbtn"></a></div>
 
 <h2 data-t="faqh"></h2>
-<details><summary data-t="q1"></summary><p data-t="a1"></p></details>
-<details><summary data-t="q2"></summary><p data-t="a2"></p></details>
-<details><summary data-t="q3"></summary><p data-t="a3"></p></details>
-<details><summary data-t="q4"></summary><p data-t="a4"></p></details>
+<div class="faq" id="faq"></div>
 
 <h2 data-t="hist"></h2>
-<div id="rel" class="meta"></div>
+<details class="hist" id="hist">
+  <summary><span class="branch"><svg viewBox="0 0 24 24"><circle cx="6" cy="6" r="2.5"/><circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="8" r="2.5"/><path d="M6 8.5v7M18 10.5c0 4-12 2-12 5.5"/></svg>main</span><span id="hsum" class="hsum"></span><span class="sp"></span><i class="chev"></i></summary>
+  <div class="graph" id="graph"></div>
+</details>
 
 <footer data-t="foot"></footer>
 </div>
@@ -142,7 +221,7 @@ a{color:var(--acc)}
 (function(){
 var T={
 es:{
-alpha:"<b>Proyecto en desarrollo · prealfa.</b> La app irá cambiando y puede tener errores. Tu retroalimentación es muy importante: cuéntanos qué falla y qué te gustaría ver.",
+pill:"Prealfa · en desarrollo activo",
 lead:"Todo lo que necesitas para AION 2 en una sola app para Windows: medidor de DPS, avisos de eventos, calculadora de crafteo y explorador de base de datos.",
 download:"Descargar para Windows",
 f1h:"Medidor de DPS",f1p:"Daño por combate y por jugador, con jefes y mazmorras reconocidos. Funciona en local.",
@@ -153,17 +232,21 @@ f5h:"Perfiles de personaje",f5p:"Busca personajes y revisa su equipo.",
 f6h:"Actualizaciones integradas",f6p:"La app te avisa de versiones nuevas y las instala con un clic.",
 install:"Instalación",
 i1:"Descarga el instalador con el botón de arriba.",i2:"Ábrelo y sigue el asistente.",i3:"Para el medidor de DPS instala",
-smart:"<b>Aviso de Windows SmartScreen.</b> Al ejecutar el instalador puede aparecer «Windows protegió su PC», porque la app aún no tiene un certificado de editor de pago. Pulsa <b>Más información</b> y luego <b>Ejecutar de todas formas</b>. Puedes verificar tu descarga comparando su SHA-256 con <a href=\"https://github.com/MasterCrafter-AION2/MasterCrafter-releases/releases/latest/download/SHA256SUMS.txt\">SHA256SUMS.txt</a>.",
-fbh:"Retroalimentación",fbp:"Al ser una prealfa, tus reportes y sugerencias son lo que más nos ayuda a mejorar.",
+smart:"<b>Aviso de Windows SmartScreen.</b> Al ejecutar el instalador puede aparecer «Windows protegió su PC», porque la app aún no tiene un certificado de editor de pago. Pulsa <b>Más información</b> y luego <b>Ejecutar de todas formas</b>. Opcional: puedes comprobar la integridad de la descarga con su huella <a href=\"https://github.com/MasterCrafter-AION2/MasterCrafter-releases/releases/latest/download/SHA256SUMS.txt\">SHA-256</a>.",
+sth:"Proyecto en desarrollo",
+stp:"MasterCrafter es una prealfa: irá cambiando y puede tener errores. Tu opinión es lo que más nos ayuda a mejorarla.",
+stbtn:"Cuéntanos qué piensas",
+fbh:"Retroalimentación",fbp:"Cuéntanos qué falla y qué te gustaría ver.",
 fbbug:"Reportar un error",fbsug:"Enviar una sugerencia",fbtype:"Tipo",fbtitle:"Título",fbdesc:"Descripción (qué pasó, qué esperabas, pasos para repetirlo)",fbcontact:"Contacto (opcional, por si necesitamos más datos)",fbsend:"Enviar",
 fbok:"¡Gracias! Recibimos tu mensaje.",fberr:"No se pudo enviar. Inténtalo más tarde.",fbinv:"Completa el título (3+ caracteres) y la descripción (10+).",fbwait:"Enviando…",
 fbnote:"Sin cuenta necesaria. Tu mensaje se guarda de forma privada; no incluyas datos personales sensibles.",
-rmh:"Hoja de ruta",rmp:"Ideas y planes sujetos a cambios, sin fechas.",
-rm_s1:"En curso",rm_s2:"Planeado",
-rm1h:"Pulir la prealfa",rm1p:"Corregir errores y ajustar lo que más nos reporten.",
-rm2h:"Firma de código (Authenticode)",rm2p:"Quitar la advertencia de SmartScreen con un certificado de editor.",
-rm3h:"Rastreador comunitario de jefes",rm3p:"Idea: horarios de reaparición compartidos entre jugadores, con privacidad por diseño. En evaluación.",
-rm4h:"Más módulos y datos",rm4p:"Ampliar la base de datos y las herramientas según lo que pida la comunidad.",
+rmh:"Hoja de ruta",rmp:"Hacia dónde vamos. Ideas y planes sujetos a cambios, sin fechas.",
+rm:[
+ {s:"now",st:"En curso",h:"Pulir la prealfa",p:"Cada reporte que llega se revisa. Corregimos errores, mejoramos la estabilidad y ajustamos lo que más nos cuentas.",c:["Estabilidad","Correcciones","Tu feedback"]},
+ {s:"next",st:"Planeado",h:"Firma de código",p:"Que Windows reconozca al editor de la app y desaparezca el aviso de SmartScreen al instalar.",c:["Authenticode","Instalación sin avisos"]},
+ {s:"next",st:"En evaluación",h:"Rastreador comunitario de jefes",p:"Horarios de reaparición compartidos entre jugadores, con la privacidad como punto de partida.",c:["Comunidad","Privacidad por diseño"]},
+ {s:"next",st:"Abierto",h:"Más módulos y datos",p:"Ampliar la base de datos y sumar herramientas según lo que pida la comunidad. Tú decides.",c:["Tú decides","<a href=\"#feedback\">Proponer una idea</a>"]}
+],
 sph:"Ayúdanos a llegar más lejos",spp:"MasterCrafter es gratis. Si quieres apoyar el proyecto, estas son las metas que nos ayudarías a cumplir:",
 g1:"Certificado de firma de código para que Windows confíe en el instalador.",
 g2:"Dominio propio y una dirección de descarga más fácil de recordar.",
@@ -171,17 +254,23 @@ g3:"Servidor en la nube para el rastreador comunitario de jefes.",
 g4:"Tiempo de desarrollo para corregir errores y añadir funciones más rápido.",
 spbtn:"Apoyar el proyecto (próximamente)",
 faqh:"Preguntas frecuentes",
-q1:"¿Es gratis?",a1:"Sí.",
-q2:"¿Por qué pide permisos de administrador?",a2:"El medidor de DPS lee el tráfico de red del juego en tu equipo, y Windows lo exige. No envía esa captura a ningún servidor.",
-q3:"¿Cómo me actualizo?",a3:"Ajustes › Actualizaciones › Buscar actualización. Las versiones van firmadas digitalmente.",
-q4:"¿Puedo ser sancionado por usarla?",a4:"MasterCrafter no modifica ni inyecta nada en el juego. Aun así es un proyecto independiente y las normas de uso son responsabilidad de cada jugador.",
-hist:"Historial de versiones",hload:"Cargando…",hfail:"Consulta el historial en la sección Releases del repositorio.",
+faq:[
+ ["¿Es gratis?","Sí, MasterCrafter es gratis."],
+ ["¿Qué significa «prealfa»?","Que la app está en una fase temprana: funciona, pero cambia seguido y puede tener errores. Por eso tu retroalimentación pesa tanto."],
+ ["¿Por qué pide permisos de administrador?","El medidor de DPS lee el tráfico de red del juego en tu equipo, y Windows lo exige. No envía esa captura a ningún servidor."],
+ ["¿Qué es Npcap y por qué lo necesito?","Es el componente que permite al medidor de DPS leer el tráfico de red. Solo hace falta para esa función; el resto de la app abre sin él."],
+ ["¿Puedo ser sancionado por usarla?","MasterCrafter no modifica ni inyecta nada en el juego. Aun así es un proyecto independiente y las normas de uso son responsabilidad de cada jugador."],
+ ["¿Cómo me actualizo?","Ajustes › Actualizaciones › Buscar actualización. Las versiones van firmadas digitalmente."],
+ ["¿Dónde guarda mis datos?","En tu equipo, en <code>%APPDATA%\\com.mastercrafter.app</code>."],
+ ["¿Cómo la desinstalo?","Como cualquier programa: Configuración de Windows › Aplicaciones › MasterCrafter › Desinstalar."]
+],
+hist:"Historial de versiones",hload:"Cargando…",hfail:"Consulta el historial en la sección Releases del repositorio.",lt:"última",
 ver:"Versión",req:"Windows 10/11 · 64 bits · gratis",
 tags:{"new":"Nuevo",fixed:"Corregido",improved:"Mejorado"},
 foot:"MasterCrafter es un proyecto de fans, independiente y sin afiliación con NCSOFT. AION es marca de sus propietarios."
 },
 en:{
-alpha:"<b>Work in progress · pre-alpha.</b> The app will keep changing and may have bugs. Your feedback is very important: tell us what breaks and what you would like to see.",
+pill:"Pre-alpha · under active development",
 lead:"Everything you need for AION 2 in one Windows app: DPS meter, event alerts, crafting calculator and database explorer.",
 download:"Download for Windows",
 f1h:"DPS meter",f1p:"Damage per fight and per player, with bosses and dungeons recognized. Runs locally.",
@@ -192,17 +281,21 @@ f5h:"Character profiles",f5p:"Search characters and check their gear.",
 f6h:"Built-in updates",f6p:"The app tells you about new versions and installs them in one click.",
 install:"Installation",
 i1:"Download the installer with the button above.",i2:"Open it and follow the wizard.",i3:"For the DPS meter, install",
-smart:"<b>Windows SmartScreen warning.</b> Running the installer may show “Windows protected your PC”, because the app does not yet have a paid publisher certificate. Click <b>More info</b>, then <b>Run anyway</b>. You can verify your download by comparing its SHA-256 with <a href=\"https://github.com/MasterCrafter-AION2/MasterCrafter-releases/releases/latest/download/SHA256SUMS.txt\">SHA256SUMS.txt</a>.",
-fbh:"Feedback",fbp:"Since this is a pre-alpha, your reports and suggestions are what help us improve the most.",
+smart:"<b>Windows SmartScreen warning.</b> Running the installer may show “Windows protected your PC”, because the app does not yet have a paid publisher certificate. Click <b>More info</b>, then <b>Run anyway</b>. Optional: you can check the download's integrity with its <a href=\"https://github.com/MasterCrafter-AION2/MasterCrafter-releases/releases/latest/download/SHA256SUMS.txt\">SHA-256</a> fingerprint.",
+sth:"Work in progress",
+stp:"MasterCrafter is a pre-alpha: it will keep changing and may have bugs. Your opinion is what helps us improve it the most.",
+stbtn:"Tell us what you think",
+fbh:"Feedback",fbp:"Tell us what breaks and what you would like to see.",
 fbbug:"Report a bug",fbsug:"Send a suggestion",fbtype:"Type",fbtitle:"Title",fbdesc:"Description (what happened, what you expected, steps to reproduce)",fbcontact:"Contact (optional, in case we need more details)",fbsend:"Send",
 fbok:"Thanks! We got your message.",fberr:"Could not send. Please try again later.",fbinv:"Fill in the title (3+ chars) and description (10+).",fbwait:"Sending…",
 fbnote:"No account needed. Your message is stored privately; do not include sensitive personal data.",
-rmh:"Roadmap",rmp:"Ideas and plans, subject to change, no dates.",
-rm_s1:"In progress",rm_s2:"Planned",
-rm1h:"Polish the pre-alpha",rm1p:"Fix bugs and tune what you report most.",
-rm2h:"Code signing (Authenticode)",rm2p:"Remove the SmartScreen warning with a publisher certificate.",
-rm3h:"Community boss tracker",rm3p:"Idea: respawn times shared among players, private by design. Under evaluation.",
-rm4h:"More modules and data",rm4p:"Expand the database and tools based on what the community asks for.",
+rmh:"Roadmap",rmp:"Where we are heading. Ideas and plans, subject to change, no dates.",
+rm:[
+ {s:"now",st:"In progress",h:"Polish the pre-alpha",p:"Every report gets reviewed. We fix bugs, improve stability and tune what you tell us the most.",c:["Stability","Fixes","Your feedback"]},
+ {s:"next",st:"Planned",h:"Code signing",p:"Windows recognizes the app's publisher and the SmartScreen warning goes away when installing.",c:["Authenticode","Warning-free install"]},
+ {s:"next",st:"Under evaluation",h:"Community boss tracker",p:"Respawn times shared among players, with privacy as the starting point.",c:["Community","Private by design"]},
+ {s:"next",st:"Open",h:"More modules and data",p:"Expand the database and add tools based on what the community asks for. You decide.",c:["You decide","<a href=\"#feedback\">Propose an idea</a>"]}
+],
 sph:"Help us go further",spp:"MasterCrafter is free. If you want to support the project, these are the goals you would help us reach:",
 g1:"A code-signing certificate so Windows trusts the installer.",
 g2:"Our own domain and an easier-to-remember download address.",
@@ -210,35 +303,68 @@ g3:"A cloud server for the community boss tracker.",
 g4:"Development time to fix bugs and add features faster.",
 spbtn:"Support the project (coming soon)",
 faqh:"FAQ",
-q1:"Is it free?",a1:"Yes.",
-q2:"Why does it ask for administrator rights?",a2:"The DPS meter reads the game's network traffic on your PC, which Windows requires. It does not send that capture to any server.",
-q3:"How do I update?",a3:"Settings › Updates › Check for updates. Releases are digitally signed.",
-q4:"Can I get banned for using it?",a4:"MasterCrafter does not modify or inject anything into the game. Still, it is an independent project and following the rules is each player's responsibility.",
-hist:"Version history",hload:"Loading…",hfail:"See the history in the repository's Releases section.",
+faq:[
+ ["Is it free?","Yes, MasterCrafter is free."],
+ ["What does “pre-alpha” mean?","The app is at an early stage: it works, but changes often and may have bugs. That is why your feedback matters so much."],
+ ["Why does it ask for administrator rights?","The DPS meter reads the game's network traffic on your PC, which Windows requires. It does not send that capture to any server."],
+ ["What is Npcap and why do I need it?","It is the component that lets the DPS meter read network traffic. It is only needed for that feature; the rest of the app opens without it."],
+ ["Can I get banned for using it?","MasterCrafter does not modify or inject anything into the game. Still, it is an independent project and following the rules is each player's responsibility."],
+ ["How do I update?","Settings › Updates › Check for updates. Releases are digitally signed."],
+ ["Where does it store my data?","On your PC, in <code>%APPDATA%\\com.mastercrafter.app</code>."],
+ ["How do I uninstall it?","Like any program: Windows Settings › Apps › MasterCrafter › Uninstall."]
+],
+hist:"Version history",hload:"Loading…",hfail:"See the history in the repository's Releases section.",lt:"latest",
 ver:"Version",req:"Windows 10/11 · 64-bit · free",
 tags:{"new":"New",fixed:"Fixed",improved:"Improved"},
 foot:"MasterCrafter is an independent fan project, not affiliated with NCSOFT. AION is a trademark of its owners."
 }};
-var L='es',rels=null;
+var ICONS=[
+ '<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>',
+ '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>',
+ '<path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>',
+ '<path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>'];
+var L='es',rels=null,io=null;
 try{L=localStorage.getItem('mc-lang')||''}catch(e){}
 if(L!=='es'&&L!=='en')L=(navigator.language||'es').slice(0,2)==='en'?'en':'es';
 function esc(s){var d=document.createElement('div');d.textContent=s;return d.innerHTML}
 function parse(b){var m=/<!--changes:([\s\S]*?)-->/.exec(b||'');if(!m)return null;try{return JSON.parse(m[1]).changes}catch(e){return null}}
-function renderRel(){
-  var box=document.getElementById('rel'),t=T[L];
-  if(rels===null){box.textContent=t.hload;return}
-  if(!rels.length){box.textContent=t.hfail;return}
-  box.className='';box.innerHTML='';
-  rels.forEach(function(r,i){
-    var d=document.createElement('details');if(i===0)d.open=true;
-    var s=document.createElement('summary');
-    s.textContent=r.tag_name+' · '+new Date(r.published_at).toLocaleDateString(L);
-    d.appendChild(s);
-    var ch=parse(r.body);
-    if(ch){ch.forEach(function(c){var p=document.createElement('div');p.className='chg';
-      p.innerHTML='<span class="tag t-'+esc(c.type)+'">'+esc(t.tags[c.type]||c.type)+'</span>'+esc(c[L]||c.es);d.appendChild(p)})}
-    else{var p=document.createElement('p');p.textContent=(r.body||'').replace(/\*\*/g,'');d.appendChild(p)}
+function watch(){
+  var els=document.querySelectorAll('.rv:not(.in),.tl:not(.in)');
+  if(!('IntersectionObserver' in window)){els.forEach(function(e){e.classList.add('in')});return}
+  if(!io)io=new IntersectionObserver(function(es){es.forEach(function(x){if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target)}})},{threshold:.15});
+  els.forEach(function(e){io.observe(e)});
+}
+function renderRoadmap(){
+  var t=T[L],h='';
+  t.rm.forEach(function(m,i){
+    h+='<div class="ms rv '+m.s+'" style="--d:'+(i*.12)+'s"><span class="ic"><svg viewBox="0 0 24 24">'+ICONS[i]+'</svg></span><div class="card"><h3>'+m.h+'<span class="st '+m.s+'">'+m.st+'</span></h3><p>'+m.p+'</p><div class="chips">'+m.c.map(function(c){return '<span class="chip">'+c+'</span>'}).join('')+'</div></div></div>';
+  });
+  document.getElementById('tl').innerHTML=h;
+}
+function renderFaq(){
+  var box=document.getElementById('faq');box.innerHTML='';
+  T[L].faq.forEach(function(f,i){
+    var d=document.createElement('div');d.className='qa rv';d.style.setProperty('--d',(i%4*.05)+'s');
+    d.innerHTML='<button aria-expanded="false"><span class="n">'+(i+1)+'</span><span class="q">'+f[0]+'</span><span class="pl"></span></button><div class="bd"><div><p>'+f[1]+'</p></div></div>';
+    var b=d.firstChild;b.onclick=function(){var o=!d.classList.contains('open');d.classList.toggle('open',o);b.setAttribute('aria-expanded',o)};
     box.appendChild(d);
+  });
+}
+function renderRel(){
+  var g=document.getElementById('graph'),t=T[L],sum=document.getElementById('hsum');
+  if(rels===null){g.textContent=t.hload;return}
+  if(!rels.length){g.textContent=t.hfail;sum.textContent='';return}
+  g.innerHTML='';
+  sum.textContent=rels[0].tag_name+' · '+rels.length+' '+(L==='en'?'releases':'versiones');
+  rels.forEach(function(r,i){
+    var c=document.createElement('div');c.className='cm'+(i===0?' latest open':'');
+    var date=new Date(r.published_at).toLocaleDateString(L,{day:'numeric',month:'short',year:'numeric'});
+    var ch=parse(r.body),body='';
+    if(ch){body=ch.map(function(x){return '<div class="chg"><span class="tag t-'+esc(x.type)+'">'+esc(t.tags[x.type]||x.type)+'</span>'+esc(x[L]||x.es)+'</div>'}).join('')}
+    else{body='<div class="chg">'+esc((r.body||'').replace(/\*\*/g,''))+'</div>'}
+    c.innerHTML='<button><span class="v">'+esc(r.tag_name)+'</span>'+(i===0?'<span class="lt">'+t.lt+'</span>':'')+'<span class="d">'+date+'</span><i class="chev"></i></button><div class="bd"><div>'+body+'</div></div>';
+    c.firstChild.onclick=function(){c.classList.toggle('open')};
+    g.appendChild(c);
   });
   document.getElementById('meta').textContent=t.ver+' '+rels[0].tag_name.replace(/^v/,'')+' · '+t.req;
 }
@@ -247,7 +373,7 @@ function apply(){
   document.querySelectorAll('[data-t]').forEach(function(e){var v=t[e.dataset.t];if(v!==undefined){e.innerHTML=v}});
   document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.dataset.l===L)});
   document.getElementById('meta').textContent=t.req;
-  renderRel();
+  renderRoadmap();renderFaq();renderRel();watch();
 }
 var fb=document.getElementById('fb'),fm=document.getElementById('fbmsg');
 fb.onsubmit=function(e){e.preventDefault();var t=T[L],f=fb.elements;
@@ -258,7 +384,7 @@ fb.onsubmit=function(e){e.preventDefault();var t=T[L],f=fb.elements;
   .then(function(r){if(!r.ok)throw 0;fb.reset();say('fbok','ok')}).catch(function(){say('fberr','err')}).then(function(){btn.disabled=false})};
 document.querySelectorAll('.lang button').forEach(function(b){b.onclick=function(){L=b.dataset.l;try{localStorage.setItem('mc-lang',L)}catch(e){}apply()}});
 apply();
-fetch('https://api.github.com/repos/MasterCrafter-AION2/MasterCrafter-releases/releases').then(function(r){return r.json()}).then(function(l){rels=Array.isArray(l)?l:[];apply()}).catch(function(){rels=[];apply()});
+fetch('https://api.github.com/repos/MasterCrafter-AION2/MasterCrafter-releases/releases').then(function(r){return r.json()}).then(function(l){rels=Array.isArray(l)?l:[];renderRel()}).catch(function(){rels=[];renderRel()});
 })();
 </script>
 </body>

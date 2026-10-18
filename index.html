@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MasterCrafter — Herramientas para AION 2</title>
+<meta name="description" content="MasterCrafter: medidor de DPS, avisos de eventos, calculadora de crafteo y explorador de base de datos para AION 2.">
+<style>
+:root{--bg:#0b1020;--card:#121a30;--line:#22304d;--txt:#e6ecff;--mut:#93a1c4;--acc:#22d3ee;--acc2:#34d399}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(1200px 600px at 50% -10%,#16315a 0,var(--bg) 60%);color:var(--txt);font:16px/1.6 system-ui,Segoe UI,Roboto,sans-serif}
+.wrap{max-width:960px;margin:0 auto;padding:0 16px}
+header{padding:72px 0 40px;text-align:center}
+h1{font-size:clamp(2rem,6vw,3.2rem);margin:0 0 8px;letter-spacing:-.02em}
+h1 span{color:var(--acc)}
+.lead{color:var(--mut);max-width:620px;margin:0 auto 28px}
+.btn{display:inline-block;background:linear-gradient(135deg,var(--acc),var(--acc2));color:#04121c;font-weight:700;padding:14px 28px;border-radius:12px;text-decoration:none;font-size:1.05rem}
+.btn:hover{filter:brightness(1.1)}
+.meta{color:var(--mut);font-size:.85rem;margin-top:12px}
+.grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px}
+.card h3{margin:0 0 6px;font-size:1rem;color:var(--acc)}
+.card p{margin:0;color:var(--mut);font-size:.92rem}
+h2{margin:44px 0 8px;font-size:1.4rem}
+.note{background:var(--card);border:1px solid var(--line);border-left:4px solid #fbbf24;border-radius:10px;padding:14px 16px;color:var(--mut);font-size:.92rem}
+.note b{color:var(--txt)}
+ol{color:var(--mut);padding-left:20px}
+details{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 16px;margin:8px 0}
+summary{cursor:pointer;font-weight:600}
+details p{color:var(--mut);margin:8px 0 0;font-size:.92rem}
+footer{margin:56px 0 32px;padding-top:20px;border-top:1px solid var(--line);color:var(--mut);font-size:.8rem;text-align:center}
+a{color:var(--acc)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <h1>Master<span>Crafter</span></h1>
+  <p class="lead">Todo lo que necesitas para AION 2 en una sola app para Windows: medidor de DPS, avisos de eventos, calculadora de crafteo y explorador de base de datos.</p>
+  <a class="btn" id="dl" href="https://github.com/MasterCrafter-AION2/MasterCrafter-releases/releases/latest/download/MasterCrafter-setup.exe">Descargar para Windows</a>
+  <div class="meta" id="meta">Windows 10/11 · 64 bits · gratis</div>
+</header>
+
+<section class="grid" aria-label="Funciones">
+  <div class="card"><h3>Medidor de DPS</h3><p>Daño por combate y por jugador, con jefes y mazmorras reconocidos. Funciona en local.</p></div>
+  <div class="card"><h3>Avisos de eventos</h3><p>Alertas de eventos y jefes para que no se te pase ninguno.</p></div>
+  <div class="card"><h3>Calculadora de crafteo</h3><p>Elige una mesa de trabajo y calcula el coste en Kinah desglosando subcomponentes, con imágenes oficiales.</p></div>
+  <div class="card"><h3>Base de datos</h3><p>Explora objetos, jefes y mazmorras sin salir de la app.</p></div>
+  <div class="card"><h3>Perfiles de personaje</h3><p>Busca personajes y revisa su equipo.</p></div>
+  <div class="card"><h3>Actualizaciones integradas</h3><p>La app te avisa de versiones nuevas y las instala con un clic.</p></div>
+</section>
+
+<h2>Instalación</h2>
+<ol>
+  <li>Descarga el instalador con el botón de arriba.</li>
+  <li>Ábrelo y sigue el asistente.</li>
+  <li>Para el medidor de DPS instala <a href="https://npcap.com/#download" rel="noopener">Npcap</a> y ejecuta la app como administrador.</li>
+</ol>
+<div class="note"><b>Aviso de Windows SmartScreen.</b> Al ejecutar el instalador puede aparecer "Windows protegió su PC", porque la app aún no tiene un certificado de editor de pago. Pulsa <b>Más información</b> y luego <b>Ejecutar de todas formas</b>. Puedes verificar tu descarga comparando su SHA-256 con el archivo <a href="https://github.com/MasterCrafter-AION2/MasterCrafter-releases/releases/latest/download/SHA256SUMS.txt">SHA256SUMS.txt</a>.</div>
+
+<h2>Preguntas frecuentes</h2>
+<details><summary>¿Es gratis?</summary><p>Sí.</p></details>
+<details><summary>¿Por qué pide permisos de administrador?</summary><p>El medidor de DPS lee el tráfico de red del juego en tu equipo, y eso lo exige Windows. No envía esa captura a ningún servidor.</p></details>
+<details><summary>¿Cómo me actualizo?</summary><p>Ajustes › Actualizaciones › Buscar actualización. Las versiones van firmadas digitalmente.</p></details>
+<details><summary>¿Puedo ser sancionado por usarla?</summary><p>MasterCrafter no modifica ni inyecta nada en el juego. Aun así, es un proyecto independiente y las normas de uso son responsabilidad de cada jugador.</p></details>
+
+<h2>Historial de versiones</h2>
+<div id="rel" class="meta">Cargando…</div>
+
+<footer>MasterCrafter es un proyecto de fans, independiente y sin afiliación con NCSOFT. AION es marca de sus propietarios.</footer>
+</div>
+<script>
+(function(){
+  var api='https://api.github.com/repos/MasterCrafter-AION2/MasterCrafter-releases/releases';
+  fetch(api).then(function(r){return r.json()}).then(function(list){
+    if(!Array.isArray(list)||!list.length)throw 0;
+    var cur=list[0];
+    document.getElementById('meta').textContent='Versión '+cur.tag_name.replace(/^v/,'')+' · Windows 10/11 · 64 bits · gratis';
+    var box=document.getElementById('rel');box.className='';box.textContent='';
+    list.forEach(function(r){
+      var d=document.createElement('details');if(r===cur)d.open=true;
+      var s=document.createElement('summary');
+      s.textContent=r.tag_name+' · '+new Date(r.published_at).toLocaleDateString('es');
+      var p=document.createElement('p');p.style.whiteSpace='pre-wrap';
+      p.textContent=(r.body||'').replace(/\*\*/g,'');
+      d.appendChild(s);d.appendChild(p);box.appendChild(d);
+    });
+  }).catch(function(){document.getElementById('rel').textContent='Consulta el historial en la sección Releases del repositorio.'});
+})();
+</script>
+</body>
+</html>

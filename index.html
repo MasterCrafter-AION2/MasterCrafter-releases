@@ -32,6 +32,8 @@ h1 span{color:var(--acc)}
 .btn.sec{background:rgba(6,182,212,.12);color:#a5f3fc;border:1px solid rgba(6,182,212,.4);padding:10px 20px;font-size:.95rem;font-weight:600}
 .btn.sec:hover{background:rgba(6,182,212,.22)}
 .btn.off{opacity:.5;pointer-events:none}
+.verify{display:inline-block;margin-top:8px;font-size:.75rem;color:var(--mut);text-decoration:underline;opacity:.8}
+.verify:hover{opacity:1}
 .meta{color:var(--mut);font-size:.85rem;margin-top:12px}
 .grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));margin:20px 0}
 .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;transition:border-color .25s,transform .25s var(--ease)}
@@ -192,6 +194,7 @@ h2.in::after{transform:scaleX(1)}
   <p class="lead" data-t="lead"></p>
   <a class="btn" id="dl" href="https://github.com/MasterCrafter-AION2/MasterCrafter-releases/releases/latest/download/MasterCrafter-setup.exe" data-t="download"></a>
   <div class="meta" id="meta"></div>
+  <a class="verify" href="https://github.com/MasterCrafter-AION2/MasterCrafter-releases/releases/latest/download/SHA256SUMS.txt" target="_blank" rel="noopener noreferrer" data-t="verify"></a>
 </header>
 
 <section class="grid" id="features">
@@ -261,6 +264,7 @@ n1:"Funciones",n2:"Instalar",n3:"Opinar",n4:"Hoja de ruta",n5:"FAQ",n6:"Versione
 pill:"Prealfa · en desarrollo activo",
 lead:"Todo lo que necesitas para AION 2 en una sola app para Windows: medidor de DPS, avisos de eventos, calculadora de crafteo y explorador de base de datos.",
 download:"Descargar para Windows",
+verify:"verificar descarga (SHA-256)",
 f1h:"Medidor de DPS",f1p:"Daño por combate y por jugador, con jefes y mazmorras reconocidos. Funciona en local.",
 f2h:"Avisos de eventos",f2p:"Alertas de eventos y jefes para que no se te pase ninguno.",
 f3h:"Calculadora de crafteo",f3p:"Elige una mesa de trabajo y calcula el coste en Kinah desglosando subcomponentes, con imágenes oficiales.",
@@ -269,7 +273,7 @@ f5h:"Perfiles de personaje",f5p:"Busca personajes y revisa su equipo.",
 f6h:"Actualizaciones integradas",f6p:"La app te avisa de versiones nuevas y las instala con un clic.",
 install:"Instalación",
 i1:"Descarga el instalador con el botón de arriba.",i2:"Ábrelo y sigue el asistente.",i3:"Para el medidor de DPS instala",
-smart:"<b>Aviso de Windows SmartScreen.</b> Al ejecutar el instalador puede aparecer «Windows protegió su PC», porque la app aún no tiene un certificado de editor de pago. Pulsa <b>Más información</b> y luego <b>Ejecutar de todas formas</b>. Opcional: puedes comprobar la integridad de la descarga con su huella <a href=\"https://github.com/MasterCrafter-AION2/MasterCrafter-releases/releases/latest/download/SHA256SUMS.txt\" target=\"_blank\" rel=\"noopener noreferrer\">SHA-256</a>.",
+smart:"<b>Aviso de Windows SmartScreen.</b> Al ejecutar el instalador puede aparecer «Windows protegió su PC», porque la app aún no tiene un certificado de editor de pago. Pulsa <b>Más información</b> y luego <b>Ejecutar de todas formas</b>.",
 sth:"Proyecto en desarrollo",
 stp:"MasterCrafter es una prealfa: irá cambiando y puede tener errores. Tu opinión es lo que más nos ayuda a mejorarla.",
 stbtn:"Cuéntanos qué piensas",
@@ -310,6 +314,7 @@ n1:"Features",n2:"Install",n3:"Feedback",n4:"Roadmap",n5:"FAQ",n6:"Versions",
 pill:"Pre-alpha · under active development",
 lead:"Everything you need for AION 2 in one Windows app: DPS meter, event alerts, crafting calculator and database explorer.",
 download:"Download for Windows",
+verify:"verify download (SHA-256)",
 f1h:"DPS meter",f1p:"Damage per fight and per player, with bosses and dungeons recognized. Runs locally.",
 f2h:"Event alerts",f2p:"Event and boss alerts so you never miss one.",
 f3h:"Crafting calculator",f3p:"Pick a work station and get the Kinah cost with a step-by-step breakdown of subcomponents, using official images.",
@@ -318,7 +323,7 @@ f5h:"Character profiles",f5p:"Search characters and check their gear.",
 f6h:"Built-in updates",f6p:"The app tells you about new versions and installs them in one click.",
 install:"Installation",
 i1:"Download the installer with the button above.",i2:"Open it and follow the wizard.",i3:"For the DPS meter, install",
-smart:"<b>Windows SmartScreen warning.</b> Running the installer may show “Windows protected your PC”, because the app does not yet have a paid publisher certificate. Click <b>More info</b>, then <b>Run anyway</b>. Optional: you can check the download's integrity with its <a href=\"https://github.com/MasterCrafter-AION2/MasterCrafter-releases/releases/latest/download/SHA256SUMS.txt\" target=\"_blank\" rel=\"noopener noreferrer\">SHA-256</a> fingerprint.",
+smart:"<b>Windows SmartScreen warning.</b> Running the installer may show “Windows protected your PC”, because the app does not yet have a paid publisher certificate. Click <b>More info</b>, then <b>Run anyway</b>.",
 sth:"Work in progress",
 stp:"MasterCrafter is a pre-alpha: it will keep changing and may have bugs. Your opinion is what helps us improve it the most.",
 stbtn:"Tell us what you think",
